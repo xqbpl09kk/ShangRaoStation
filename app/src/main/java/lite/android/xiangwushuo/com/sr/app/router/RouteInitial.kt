@@ -57,7 +57,7 @@ object RouteInitial {
         val loader:ClassLoader = Thread.currentThread().contextClassLoader;
         val packagePath = packageName.replace(".", "/");
 
-        val url = loader.getResource("$packagePath/");
+        val url = loader.parent.getResource(packagePath)
         if (url != null) {
             val protocol = url.protocol;
             if (protocol.equals("file")) {
