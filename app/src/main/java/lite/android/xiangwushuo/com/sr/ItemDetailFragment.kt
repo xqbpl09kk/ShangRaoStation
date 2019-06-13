@@ -1,11 +1,11 @@
-package lite.android.xiangwushuo.com.shangraostation
+package lite.android.xiangwushuo.com.sr
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import lite.android.xiangwushuo.com.shangraostation.dummy.DummyContent
+import lite.android.xiangwushuo.com.sr.dummy.DummyContent
 import kotlinx.android.synthetic.main.activity_item_detail.*
 import kotlinx.android.synthetic.main.item_detail.view.*
 

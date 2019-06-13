@@ -1,4 +1,4 @@
-package lite.android.xiangwushuo.com.shangraostation.dummy
+package lite.android.xiangwushuo.com.sr.dummy
 
 import java.util.ArrayList
 import java.util.HashMap

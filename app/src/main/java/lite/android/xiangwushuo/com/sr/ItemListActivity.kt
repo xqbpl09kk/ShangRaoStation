@@ -1,7 +1,6 @@
-package lite.android.xiangwushuo.com.shangraostation
+package lite.android.xiangwushuo.com.sr
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
@@ -20,7 +19,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 
-import lite.android.xiangwushuo.com.shangraostation.dummy.DummyContent
+import lite.android.xiangwushuo.com.sr.dummy.DummyContent
 import kotlinx.android.synthetic.main.activity_item_list.*
 import kotlinx.android.synthetic.main.item_list_content.view.*
 import kotlinx.android.synthetic.main.item_list.*

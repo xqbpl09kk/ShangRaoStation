@@ -1,4 +1,4 @@
-package lite.android.xiangwushuo.com.shangraostation
+package lite.android.xiangwushuo.com.sr
 
 import android.content.Intent
 import android.os.Bundle

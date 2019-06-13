@@ -1,4 +1,4 @@
-package lite.android.xiangwushuo.com.shangraostation;
+package lite.android.xiangwushuo.com.sr;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -9,7 +9,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,8 +24,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.Objects;
 
+import lite.android.xiangwushuo.com.sr.app.router.RoutePath;
+
+@RoutePath("java_path")
 public class JavaHookActivity extends AppCompatActivity {
 
     private boolean intercepte = false;

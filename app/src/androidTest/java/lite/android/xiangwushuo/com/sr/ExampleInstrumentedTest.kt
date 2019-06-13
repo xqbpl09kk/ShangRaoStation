@@ -1,4 +1,4 @@
-package lite.android.xiangwushuo.com.shangraostation
+package lite.android.xiangwushuo.com.sr
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
