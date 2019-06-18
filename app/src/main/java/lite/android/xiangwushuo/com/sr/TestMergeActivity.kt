@@ -2,8 +2,11 @@ package lite.android.xiangwushuo.com.sr
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import lite.android.xiangwushuo.com.sr.app.router.RouteConstant
+import lite.android.xiangwushuo.com.sr.app.router.RoutePath
 
-class TestMergeActivity : AppCompatActivity(){
+@RoutePath(RouteConstant.APP_MERGE)
+class TestMergeActivity : BaseActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

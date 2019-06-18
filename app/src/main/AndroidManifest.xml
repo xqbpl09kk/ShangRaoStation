@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="lite.android.xiangwushuo.com.sr.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -21,22 +21,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="lite.android.xiangwushuo.com.sr.ItemDetailActivity"
+            android:name=".ItemDetailActivity"
             android:label="@string/title_item_detail"
-            android:parentActivityName="lite.android.xiangwushuo.com.sr.ItemListActivity"
+            android:parentActivityName=".ItemListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="lite.android.xiangwushuo.com.sr.lite.android.xiangwushuo.com.sr.ItemListActivity" />
+                android:value=".ItemListActivity" />
         </activity>
 
-        <activity android:name="lite.android.xiangwushuo.com.sr.TestMergeActivity"/>
-        <activity android:name="lite.android.xiangwushuo.com.sr.mvvp.MDataBindActivity"/>
+        <activity android:name=".TestMergeActivity"/>
+        <activity android:name=".mvvp.MDataBindActivity"/>
 
+        <activity android:name=".JavaHookActivity"/>
 
-        <service android:name="lite.android.xiangwushuo.com.sr.JavaHookActivity$ActionService"/>
+        <service android:name=".JavaHookActivity$ActionService"/>
 
-        <receiver android:name="lite.android.xiangwushuo.com.sr.JavaHookActivity$ActionReceiver"/>
+        <receiver android:name=".JavaHookActivity$ActionReceiver"/>
     </application>
 
 </manifest>

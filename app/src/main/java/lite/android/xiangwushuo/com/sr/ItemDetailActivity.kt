@@ -6,6 +6,8 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_item_detail.*
+import lite.android.xiangwushuo.com.sr.app.router.RouteConstant
+import lite.android.xiangwushuo.com.sr.app.router.RoutePath
 
 /**
  * An activity representing a single Item detail screen. This
@@ -13,7 +15,8 @@ import kotlinx.android.synthetic.main.activity_item_detail.*
  * item details are presented side-by-side with a list of items
  * in a [ItemListActivity].
  */
-class ItemDetailActivity : AppCompatActivity() {
+@RoutePath(RouteConstant.APP_ITEM_DETAIL)
+class ItemDetailActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

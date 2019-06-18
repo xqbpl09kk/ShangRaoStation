@@ -1,155 +1,87 @@
 package lite.android.xiangwushuo.com.sr.app.router
 
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import lite.android.xiangwushuo.com.sr.BaseActivity
+import lite.android.xiangwushuo.com.sr.BuildConfig
 import lite.android.xiangwushuo.com.sr.app.MyApp
-import java.io.IOException
-import java.net.JarURLConnection
-import java.net.URL
-import java.net.URLClassLoader
-import java.util.jar.JarFile
-import java.io.File
 import java.util.*
-import java.util.jar.JarEntry
+import kotlin.collections.ArrayList
 
-
+//TODO : Router
 object RouteInitial {
 
-    private val pathMap : LinkedHashMap<String , Class<in BaseActivity>> = LinkedHashMap()
+    private val pathMap: LinkedHashMap<String, Class<out BaseActivity>> = LinkedHashMap()
 
-    fun init(){
-        val classSet = getClassesFromPackage(MyApp.INSTANCE.packageName, true)
-        for(className in classSet!!.iterator()){
-//            val classLoader = BaseActivity::class.java.classLoader
-//            var  clazz = Class.forName(className)
-//            if(clazz.isInstance(BaseActivity::class.java)){
-//                val activityClass = Class.forName(className , false , classLoader)
-////                val activityClazz = clazz as BaseActivity::class.java
-//                for(annotation in clazz.annotations){
-//                    if(annotation is RoutePath){
-////                        pathMap.put(annotation.path , activityClass as Class<in BaseActivity>)
-//                        Log.e("RouteInitial" , "MDataBindActivity route path is ${annotation.path}")
-//                    }
-//                }
-//            }
+    fun init(context: Context) {
+        val activities = getActivities(context)
+        for (activity in activities) {
+            val key = getRouteByClass(activity)
+            pathMap[key] = activity
         }
     }
 
-    fun routeByPath(path : String){
-        if(pathMap.isEmpty()){
-            init()
-        }
-        val appCxt = MyApp.INSTANCE
-        val clazz = pathMap[path]
-        appCxt.startActivity(Intent(appCxt , clazz).apply {
-            this.putExtra("extraData" , Bundle().apply {
-                this.putInt("index" , 1)
 
+    fun routeByPath(path: String) {
+        if (pathMap.isEmpty())
+            init(MyApp.INSTANCE)
+        val appCxt = MyApp.INSTANCE
+        val clazz = pathMap[path] ?: throw IllegalArgumentException("没有配置$path 路径的activity")
+        appCxt.startActivity(Intent(appCxt, clazz)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).apply {
+            this.putExtra("extraData", Bundle().apply {
+                this.putInt("index", 1)
             })
         })
-
     }
 
-
-    private fun  getClassesFromPackage( packageName:String,  isRecursion:Boolean) :Set<String>?{
-        var  classNames :Set<String>?= null;
-        val loader:ClassLoader = Thread.currentThread().contextClassLoader;
-        val packagePath = packageName.replace(".", "/");
-
-        val url = loader.parent.getResource(packagePath)
-        if (url != null) {
-            val protocol = url.protocol;
-            if (protocol.equals("file")) {
-                classNames = getClassNameFromDir(url.getPath(), packageName, isRecursion);
-            } else if (protocol.equals("jar")) {
-                var jarFile :JarFile ?= null;
-                try {
-                    jarFile =  (url.openConnection() as JarURLConnection).getJarFile()
-                } catch (e : Exception ) {
-                    e.printStackTrace();
-                }
-
-                if (jarFile != null) {
-                    getClassNameFromJar(jarFile.entries(), packageName, isRecursion);
-                }
+    /**
+     * 从Activity的注解中获取path
+     * @param clazz : 类明
+     */
+    private fun getRouteByClass(clazz: Class<out BaseActivity>): String {
+        val activityClass = Class.forName(clazz.name
+                , false, BaseActivity::class.java.classLoader)
+        for (annotation in activityClass.annotations) {
+            if (annotation is RoutePath) {
+                return annotation.value
             }
-        } else {
-            /*从所有的jar包中查找包名*/
-            classNames = getClassNameFromJars((loader as URLClassLoader).getURLs(), packageName, isRecursion);
         }
-
-        return classNames;
+        if(BuildConfig.DEBUG)
+            throw IllegalArgumentException("请在BaseActivity中配置Route属性")
+        return RouteConstant.APP_MAIN
     }
 
 
-    private fun getClassNameFromJars(urls: Array<URL>, packageName: String, isRecursion: Boolean): Set<String> {
-        val classNames = HashSet<String>()
-
-        for (i in urls.indices) {
-            val classPath = urls[i].getPath()
-
-            //不必搜索classes文件�?
-            if (classPath.endsWith("classes/")) {
-                continue
-            }
-
-            var jarFile: JarFile? = null
+    /**
+     *根据package Manager获取当前App的所有Activity
+     * @param context : App Context
+     */
+    private fun getActivities(context: Context): ArrayList<Class<out BaseActivity>> {
+        val pm = context.packageManager
+        val packageInfo = pm.getPackageInfo(
+                context.packageName, PackageManager.GET_ACTIVITIES)
+        val activities = arrayListOf<Class<out BaseActivity>>()
+        for (activityInfo in packageInfo.activities) {
             try {
-                jarFile = JarFile(classPath.substring(classPath.indexOf("/")))
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-
-            if (jarFile != null) {
-                classNames.addAll(getClassNameFromJar(jarFile.entries(), packageName, isRecursion))
-            }
-        }
-
-        return classNames
-    }
-
-    private fun getClassNameFromJar(jarEntries: Enumeration<JarEntry>, packageName: String, isRecursion: Boolean): Set<String> {
-        val classNames = HashSet<String>()
-
-        while (jarEntries.hasMoreElements()) {
-            val jarEntry = jarEntries.nextElement()
-            if (!jarEntry.isDirectory()) {
-                var entryName = jarEntry.getName().replace("/", "")
-                if (entryName.endsWith(".class") && !entryName.contains("$") && entryName.startsWith(packageName)) {
-                    entryName = entryName.replace(".class", "")
-                    if (isRecursion) {
-                        classNames.add(entryName)
-                    } else if (!entryName.replace("$packageName.", "").contains("")) {
-                        classNames.add(entryName)
-                    }
+                val clazzInfo =
+                        Class.forName(activityInfo.name, false
+                                , BaseActivity::class.java.classLoader)
+                                .asSubclass(BaseActivity::class.java)
+                activities.add(clazzInfo)
+            } catch (t: Throwable) {
+                t.printStackTrace()
+                if (BuildConfig.DEBUG) {
+                    throw  t
                 }
             }
         }
-
-        return classNames
-    }
-
-
-    private fun getClassNameFromDir(filePath: String, packageName: String, isRecursion: Boolean): Set<String> {
-        val className = HashSet<String>()
-        val file = File(filePath)
-        val files = file.listFiles()
-        for (childFile in files) {
-            if (childFile.isDirectory()) {
-                if (isRecursion) {
-                    className.addAll(getClassNameFromDir(childFile.getPath(), packageName + "" + childFile.getName(), isRecursion))
-                }
-            } else {
-                val fileName = childFile.getName()
-                if (fileName.endsWith(".class") && !fileName.contains("$")) {
-                    className.add(packageName + "" + fileName.replace(".class", ""))
-                }
-            }
-        }
-
-        return className
+        return activities
     }
 
 
 }
+
+

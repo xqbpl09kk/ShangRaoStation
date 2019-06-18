@@ -11,7 +11,7 @@ import lite.android.xiangwushuo.com.sr.app.MyApp
  * 邮   箱: bob.xia@xiangwushuo.com
  * 文件说明：TODO
  */
-public class BaseActivity  :AppCompatActivity(){
+abstract class BaseActivity  :AppCompatActivity(){
     protected val appCxt = MyApp.INSTANCE
 
     override fun onCreate(savedInstanceState: Bundle?) {

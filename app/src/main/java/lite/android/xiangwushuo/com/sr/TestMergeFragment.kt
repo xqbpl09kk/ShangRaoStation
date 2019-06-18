@@ -13,7 +13,7 @@ import android.view.ViewGroup
  * 邮   箱: bob.xia@xiangwushuo.com
  * 文件说明：TODO
  */
-public class TestMergeFragment : ListFragment() {
+class TestMergeFragment : ListFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_test_merge, container,false  )

@@ -23,6 +23,8 @@ import lite.android.xiangwushuo.com.sr.dummy.DummyContent
 import kotlinx.android.synthetic.main.activity_item_list.*
 import kotlinx.android.synthetic.main.item_list_content.view.*
 import kotlinx.android.synthetic.main.item_list.*
+import lite.android.xiangwushuo.com.sr.app.router.RouteConstant
+import lite.android.xiangwushuo.com.sr.app.router.RoutePath
 
 /**
  * An activity representing a list of Pings. This activity
@@ -32,7 +34,8 @@ import kotlinx.android.synthetic.main.item_list.*
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-class ItemListActivity : AppCompatActivity() {
+@RoutePath(RouteConstant.APP_ITEM_LIST)
+class ItemListActivity : BaseActivity() {
     private val colorSpan: ForegroundColorSpan by lazy { ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorPrimary)) }
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet

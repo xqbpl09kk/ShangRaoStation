@@ -24,11 +24,14 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import lite.android.xiangwushuo.com.sr.app.router.RouteConstant;
 import lite.android.xiangwushuo.com.sr.app.router.RoutePath;
 
-@RoutePath("java_path")
-public class JavaHookActivity extends AppCompatActivity {
+@RoutePath(RouteConstant.APP_HOOK)
+public class JavaHookActivity extends BaseActivity {
 
     private boolean intercepte = false;
     private int notificationId  = 10001  ;
@@ -49,11 +52,27 @@ public class JavaHookActivity extends AppCompatActivity {
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                click(v);
+                regexMatche();
             }
         });
         createNotificationChannel() ;
+        regexMatche();
     }
+
+
+
+
+    private void  regexMatche() {
+//        String str = "<a href=\"/pages/mine/ucenter/index?code=501&userId=1>dsaddas</a>";
+//        String pattern = "<a.+?href=(.+)>(.+)</a>" ;
+//        Pattern r = Pattern.compile(pattern);
+//        Matcher m = r.matcher(str);
+//        m.replaceAll()
+//        boolean result = m.matches() ;
+//        System.out.println(result);
+//        Log.e("Main" , "result is" + result)  ;
+    }
+
 
     private void click (View view ){
         intercepte = !intercepte;

@@ -3,7 +3,9 @@ package lite.android.xiangwushuo.com.sr.mvvp;
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import lite.android.xiangwushuo.com.sr.BaseActivity
 import lite.android.xiangwushuo.com.sr.R
+import lite.android.xiangwushuo.com.sr.app.router.RouteConstant
 import lite.android.xiangwushuo.com.sr.app.router.RoutePath
 import lite.android.xiangwushuo.com.sr.databinding.ActivityMdbBinding
 
@@ -14,8 +16,8 @@ import lite.android.xiangwushuo.com.sr.databinding.ActivityMdbBinding
  * 邮   箱: bob.xia@xiangwushuo.com
  * 文件说明：TODO
  */
-@RoutePath("data_binding")
-class MDataBindActivity : AppCompatActivity() {
+@RoutePath(RouteConstant.APP_DATA_BIND)
+class MDataBindActivity : BaseActivity() {
 
     lateinit var dataBinding: ActivityMdbBinding
 

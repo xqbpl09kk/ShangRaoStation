@@ -23,7 +23,7 @@ import lite.android.xiangwushuo.com.sr.mvvp.MDataBindActivity
  */
 
 @RoutePath(RouteConstant.APP_MAIN)
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private val arrays = arrayOf("itemList", "Hook", "DataBinding")
 
@@ -43,23 +43,23 @@ class MainActivity : AppCompatActivity() {
                 return object : RecyclerView.ViewHolder(textView) {
                     init {
                         itemView.setOnClickListener {
-                            var bundle :Bundle ? = null
-                            val clazz = when(adapterPosition){
-                                0 -> {
-                                    bundle = Bundle()
-                                    ItemDetailActivity::class.java
-                                }
-                                1 -> JavaHookActivity::class.java
-                                2 -> MDataBindActivity::class.java
-                                else -> MainActivity::class.java
-                            }
-                            val activityIntent= Intent(actCxt , clazz)
-                            bundle?.let {
-                                activityIntent.putExtra("bundle" , it )
-                            }
-                            actCxt.startActivity(activityIntent)
+//                            var bundle :Bundle ? = null
+//                            val clazz = when(adapterPosition){
+//                                0 -> {
+//                                    bundle = Bundle()
+//                                    ItemDetailActivity::class.java
+//                                }
+//                                1 -> JavaHookActivity::class.java
+//                                2 -> MDataBindActivity::class.java
+//                                else -> MainActivity::class.java
+//                            }
+//                            val activityIntent= Intent(actCxt , clazz)
+//                            bundle?.let {
+//                                activityIntent.putExtra("bundle" , it )
+//                            }
+//                            actCxt.startActivity(activityIntent)
 
-                            RouteInitial.routeByPath(RouteConstant.APP_MAIN)
+                            RouteInitial.routeByPath(RouteConstant.APP_HOOK)
                         }
                     }
                 }

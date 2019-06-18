@@ -1,6 +1,7 @@
 package lite.android.xiangwushuo.com.sr.app
 
 import android.app.Application
+import lite.android.xiangwushuo.com.sr.app.router.RouteInitial
 
 class MyApp : Application() {
 
@@ -11,6 +12,6 @@ class MyApp : Application() {
     override fun onCreate() {
         super.onCreate()
         INSTANCE = this
-//        RouteInitial.init()
+        RouteInitial.init(this)
     }
 }
