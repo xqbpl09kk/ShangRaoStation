@@ -25,58 +25,43 @@ import lite.android.xiangwushuo.com.sr.mvvp.MDataBindActivity
 @RoutePath(RouteConstant.APP_MAIN)
 class MainActivity : BaseActivity() {
 
-    private val arrays = arrayOf("itemList", "Hook", "DataBinding")
+    private val arrays = arrayOf(
+            RouteConstant.APP_ITEM_DETAIL,
+            RouteConstant.APP_HOOK,
+            RouteConstant.APP_DATA_BIND)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        recyclerView.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>( ) {
-            val actCxt  = this@MainActivity
-            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-                val textView = TextView(actCxt).apply {
-                    layoutParams = ViewGroup.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT)
-                    gravity = Gravity.CENTER
-                    setPadding(30,30,30,30)
-                }
-                return object : RecyclerView.ViewHolder(textView) {
-                    init {
-                        itemView.setOnClickListener {
-//                            var bundle :Bundle ? = null
-//                            val clazz = when(adapterPosition){
-//                                0 -> {
-//                                    bundle = Bundle()
-//                                    ItemDetailActivity::class.java
-//                                }
-//                                1 -> JavaHookActivity::class.java
-//                                2 -> MDataBindActivity::class.java
-//                                else -> MainActivity::class.java
-//                            }
-//                            val activityIntent= Intent(actCxt , clazz)
-//                            bundle?.let {
-//                                activityIntent.putExtra("bundle" , it )
-//                            }
-//                            actCxt.startActivity(activityIntent)
-
-                            RouteInitial.routeByPath(RouteConstant.APP_HOOK)
+        RecyclerView(this).apply {
+            setContentView(this)
+            adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                val actCxt  = this@MainActivity
+                override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+                    val textView = TextView(actCxt).apply {
+                        layoutParams = ViewGroup.LayoutParams(
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.WRAP_CONTENT)
+                        gravity = Gravity.CENTER
+                        setPadding(30,30,30,30)
+                    }
+                    return object : RecyclerView.ViewHolder(textView) {
+                        init {
+                            itemView.setOnClickListener {
+                                RouteInitial.routeByPath(arrays[adapterPosition])
+                            }
                         }
                     }
                 }
-            }
 
-            override fun getItemCount(): Int {
-                return arrays.size
-            }
+                override fun getItemCount(): Int {
+                    return arrays.size
+                }
 
-            override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-                (holder.itemView as? TextView)?.text = arrays[position]
+                override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+                    (holder.itemView as? TextView)?.text = arrays[position]
+                }
             }
-
+            this.layoutManager = LinearLayoutManager(this@MainActivity)
         }
-        recyclerView.layoutManager = LinearLayoutManager(this)
-
     }
-
-
 }

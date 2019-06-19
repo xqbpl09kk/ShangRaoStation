@@ -1,9 +1,12 @@
 package lite.android.xiangwushuo.com.sr.app.router
 
+import android.app.Activity
+import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import lite.android.xiangwushuo.com.sr.BaseActivity
 import lite.android.xiangwushuo.com.sr.BuildConfig
 import lite.android.xiangwushuo.com.sr.app.MyApp
@@ -11,7 +14,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 //TODO : Router
-object RouteInitial {
+object RouteInitial : IRouter{
 
     private val pathMap: LinkedHashMap<String, Class<out BaseActivity>> = LinkedHashMap()
 
@@ -36,6 +39,30 @@ object RouteInitial {
             })
         })
     }
+
+    fun routerByPath(context : Context , path:String ){
+
+    }
+
+    fun routerByPath(path : String ,
+                     context : Context ?= null ,
+                     requestCode : Int? = null  ,
+                     bundle : Bundle ?= null ,
+                     fragment : Fragment?= null){
+        val cxt :Context  = when(context){
+            is Activity -> {
+                context
+            }
+            is Application ->{
+                context
+            }
+            else -> {
+                MyApp.INSTANCE
+            }
+        }
+    }
+
+
 
     /**
      * 从Activity的注解中获取path
